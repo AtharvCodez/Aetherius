@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aetherius - Our Products</title>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-dark: #0a0a0f;
+            --bg-card: #151520;
+            --accent-primary: #6366f1;
+            --accent-cyan: #00d4ff;
+            --accent-glow: #818cf8;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0b0;
+            --border-subtle: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 90%;
+            margin: 0 auto;
+        }
+
+        /* ========== NAVIGATION (from Homepage) ========== */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 5%;
+            z-index: 1000;
+            background-color: rgba(10, 10, 15, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-primary);
+        }
+        
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 50px;
+            padding: 0.3rem 1rem;
+        }
+        .search-bar input {
+            background: transparent;
+            border: none;
+            color: var(--text-primary);
+            outline: none;
+            width: 150px;
+        }
+        .search-bar input::placeholder {
+            color: var(--text-secondary);
+        }
+        .search-icon {
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            margin-left: 0.5rem;
+        }
+
+
+        .nav-cta {
+            padding: 0.75rem 1.5rem;
+            background: var(--accent-primary);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .nav-cta:hover {
+            background: var(--accent-glow);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.4);
+        }
+        
+        /* ========== STICKY BOTTOM NAVBAR ========== */
+        .sticky-bottom-nav {
+            display: none; /* Hidden by default */
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(10, 10, 15, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 0.75rem 1rem;
+            border-top: 1px solid var(--border-subtle);
+            justify-content: space-around;
+            align-items: center;
+            z-index: 1001;
+        }
+
+        .bottom-nav-link {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-size: 0.75rem;
+            transition: color 0.3s;
+        }
+
+        .bottom-nav-link i {
+            font-size: 1.5rem;
+        }
+
+        .bottom-nav-link:hover {
+            color: var(--text-primary);
+        }
+
+        /* ========== HERO SECTION ========== */
+        .hero {
+            padding-top: 150px; /* Offset for fixed nav */
+            min-height: 70vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: radial-gradient(ellipse at 50% -20%, #2c3e50, var(--bg-dark) 60%);
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 6vw, 4.5rem);
+            font-weight: 800;
+            letter-spacing: -0.04em;
+            margin-bottom: 1rem;
+        }
+        
+        .hero h1 .highlight {
+             background: linear-gradient(135deg, var(--accent-cyan), var(--accent-primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        /* ========== PRODUCTS SECTION ========== */
+        .products {
+            padding: 100px 5%;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .product-card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            border: 1px solid var(--border-subtle);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex; /* Keep visible for JS filtering */
+            flex-direction: column;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+        }
+        
+        .product-image-wrapper {
+            height: 250px;
+            overflow: hidden;
+        }
+
+        .product-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .product-content {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1; /* Allows footer to stick to bottom */
+        }
+        
+        .product-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .product-content p {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+            flex-grow: 1;
+        }
+
+        .product-cta {
+            display: inline-block;
+            text-decoration: none;
+            color: var(--accent-glow);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: color 0.3s;
+        }
+        
+        .product-cta:hover {
+            color: var(--text-primary);
+        }
+
+        #no-results {
+            display: none; /* Hidden by default */
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 1.5rem;
+            padding: 4rem 0;
+            grid-column: 1 / -1; /* Span full width of grid */
+        }
+
+        /* ========== FOOTER ========== */
+        footer {
+            padding: 4rem 5%;
+            border-top: 1px solid var(--border-subtle);
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+            text-align: left;
+        }
+
+        .footer-section h4 {
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin: 0.75rem 0;
+        }
+
+        .footer-section a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: var(--text-primary);
+        }
+
+        .footer-bottom {
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-subtle);
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+
+        /* --- Animations --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- Responsive --- */
+         @media (max-width: 1024px) {
+            .nav-links {
+                display: none;
+            }
+            .sticky-bottom-nav {
+                display: flex;
+            }
+        }
+        @media (max-width: 768px) {
+            nav { padding: 1.5rem 5%; }
+            .search-bar { display: none; }
+            .hero { min-height: 60vh; padding: 120px 5% 60px; }
+            .products-grid { grid-template-columns: 1fr; }
+        }
+
+    </style>
+</head>
+<body>
+    
+    <nav>
+        <a href="index.html" class="logo">AETHERIUS</a>
+        <div class="nav-right">
+             <ul class="nav-links">
+                <li><a href="index.html#features">Features</a></li>
+                <li><a href="Product.html">Products</a></li>
+                <li><a href="index.html#pricing">Pricing</a></li>
+                <li><a href="testimonial.html">Reviews</a></li>
+                <li><a href="aboutUs.html">About Us</a></li>
+            </ul>
+            <div class="search-bar">
+                <input type="text" id="product-search" placeholder="Search products...">
+                <i class="ph ph-magnifying-glass search-icon"></i>
+            </div>
+            <button onclick="window.location.href='sign_In.html';" class="nav-cta">Sign In</button>
+        </div>
+    </nav>
+    
+    <!-- STICKY BOTTOM NAV FOR MOBILE -->
+    <div class="sticky-bottom-nav">
+        <a href="index.html#features" class="bottom-nav-link">
+            <i class="ph ph-sparkle"></i>
+            <span>Home</span>
+        </a>
+        <a href="Product.html" class="bottom-nav-link">
+            <i class="ph ph-shopping-bag-open"></i>
+            <span>Products</span>
+        </a>
+        <a href="index.html#pricing" class="bottom-nav-link">
+            <i class="ph ph-tag"></i>
+            <span>Pricing</span>
+        </a>
+        <a href="testimonial.html" class="bottom-nav-link">
+            <i class="ph ph-star"></i>
+            <span>Reviews</span>
+        </a>
+        <a href="aboutUs.html" class="bottom-nav-link">
+            <i class="ph ph-info"></i>
+            <span>About Us</span>
+        </a>
+    </div>
+
+    <main>
+        <section class="hero" id="home">
+            <div class="hero-content reveal">
+                <h1>Our Suite of <span class="highlight">Digital Products</span></h1>
+                <p>Innovative solutions designed for performance, scalability, and user delight. Explore the tools that will redefine your workflow.</p>
+            </div>
+        </section>
+
+        <section class="products" id="products">
+            <div class="products-grid">
+                
+                <div class="product-card reveal">
+                    <div class="product-image-wrapper">
+                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1740&auto=format&fit=crop" alt="Nexus Dashboard">
+                    </div>
+                    <div class="product-content">
+                        <h3>Nexus Dashboard</h3>
+                        <p>An intuitive analytics platform that transforms complex data into actionable insights. Monitor KPIs and make data-driven decisions with ease.</p>
+                        <a href="#" class="product-cta">Learn More <i class="ph-bold ph-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <div class="product-card reveal">
+                    <div class="product-image-wrapper">
+                        <img src="https://images.unsplash.com/photo-1581090464777-f3220bbe1b8b?q=80&w=1587&auto=format&fit=crop" alt="Automaton Engine">
+                    </div>
+                    <div class="product-content">
+                        <h3>Automaton Engine</h3>
+                        <p>A powerful workflow automation tool. Connect your apps, automate repetitive tasks, and free up your team to focus on what matters most.</p>
+                        <a href="#" class="product-cta">Learn More <i class="ph-bold ph-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <div class="product-card reveal">
+                    <div class="product-image-wrapper">
+                        <img src="https://images.unsplash.com/photo-1634712282210-2b7a3613236c?q=80&w=1770&auto=format&fit=crop" alt="Aegis Security Suite">
+                    </div>
+                    <div class="product-content">
+                        <h3>Aegis Security Suite</h3>
+                        <p>Enterprise-grade security for your digital assets. Protect against threats with real-time monitoring, threat detection, and automated response.</p>
+                        <a href="#" class="product-cta">Learn More <i class="ph-bold ph-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <div class="product-card reveal">
+                    <div class="product-image-wrapper">
+                        <img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?q=80&w=1769&auto=format&fit=crop" alt="Synapse Connect">
+                    </div>
+                    <div class="product-content">
+                        <h3>Synapse Connect</h3>
+                        <p>A unified collaboration platform that brings your teams together through chat, video conferencing, and project management tools in one place.</p>
+                        <a href="#" class="product-cta">Learn More <i class="ph-bold ph-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <div class="product-card reveal">
+                    <div class="product-image-wrapper">
+                        <img src="https://images.unsplash.com/photo-1639755299482-163bca32585b?q=80&w=1770&auto=format&fit=crop" alt="Quantum Ledger">
+                    </div>
+                    <div class="product-content">
+                        <h3>Quantum Ledger</h3>
+                        <p>A secure and scalable blockchain solution for transparent and immutable record-keeping. Perfect for supply chains, finance, and digital identity.</p>
+                        <a href="#" class="product-cta">Learn More <i class="ph-bold ph-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <div class="product-card reveal">
+                    <div class="product-image-wrapper">
+                        <img src="https://images.unsplash.com/photo-1620712943543-256390a788c9?q=80&w=1770&auto=format&fit=crop" alt="Oracle AI">
+                    </div>
+                    <div class="product-content">
+                        <h3>Oracle AI</h3>
+                        <p>A predictive analytics and machine learning toolkit. Build, train, and deploy AI models to forecast trends and personalize user experiences.</p>
+                        <a href="#" class="product-cta">Learn More <i class="ph-bold ph-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <div class="product-card reveal">
+                    <div class="product-image-wrapper">
+                        <img src="https://images.unsplash.com/photo-1556740738-b6a63e2775df?q=80&w=1770&auto=format&fit=crop" alt="Momentum CRM">
+                    </div>
+                    <div class="product-content">
+                        <h3>Momentum CRM</h3>
+                        <p>Next-generation Customer Relationship Management software. Manage leads, track interactions, and build lasting customer loyalty.</p>
+                        <a href="#" class="product-cta">Learn More <i class="ph-bold ph-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <div class="product-card reveal">
+                    <div class="product-image-wrapper">
+                        <img src="https://images.unsplash.com/photo-1526374965328-5f61d25c0940?q=80&w=1770&auto=format&fit=crop" alt="Vanguard Firewall">
+                    </div>
+                    <div class="product-content">
+                        <h3>Vanguard Firewall</h3>
+                        <p>An advanced, AI-driven network firewall that intelligently adapts to new threats, providing unparalleled protection for your infrastructure.</p>
+                        <a href="#" class="product-cta">Learn More <i class="ph-bold ph-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <div class="product-card reveal">
+                    <div class="product-image-wrapper">
+                        <img src="https://images.unsplash.com/photo-1587749091104-a212015a0170?q=80&w=1770&auto=format&fit=crop" alt="Echo Scribe">
+                    </div>
+                    <div class="product-content">
+                        <h3>Echo Scribe</h3>
+                        <p>AI-powered transcription service that provides fast, accurate, and searchable transcripts for your meetings, interviews, and audio content.</p>
+                        <a href="#" class="product-cta">Learn More <i class="ph-bold ph-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <div class="product-card reveal">
+                    <div class="product-image-wrapper">
+                        <img src="https://images.unsplash.com/photo-1544383835-bda2bc66a22d?q=80&w=1770&auto=format&fit=crop" alt="Catalyst DB">
+                    </div>
+                    <div class="product-content">
+                        <h3>Catalyst DB</h3>
+                        <p>A high-performance, distributed database designed for massive scalability and real-time data processing. Built for the modern application.</p>
+                        <a href="#" class="product-cta">Learn More <i class="ph-bold ph-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <div id="no-results">
+                    <h3>No products found</h3>
+                    <p>Try adjusting your search term.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Shop</h4>
+                    <ul>
+                        <li><a href="#">New Arrivals</a></li>
+                        <li><a href="#">Deals</a></li>
+                        <li><a href="#">Electronics</a></li>
+                        <li><a href="#">Fashion</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Press</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Track Order</a></li>
+                        <li><a href="#">Returns</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="#">Privacy</a></li>
+                        <li><a href="#">Terms</a></li>
+                        <li><a href="#">Cookie Policy</a></li>
+                        <li><a href="#">Licenses</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Aetherius. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+
+    <script>
+        // --- GSAP Scroll Reveal Animation ---
+        gsap.registerPlugin(ScrollTrigger);
+        const reveals = document.querySelectorAll(".reveal");
+        reveals.forEach(reveal => {
+            gsap.fromTo(reveal, 
+                { opacity: 0, y: 50 },
+                {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.8,
+                    ease: "power3.out",
+                    scrollTrigger: {
+                        trigger: reveal,
+                        start: "top 90%",
+                        toggleActions: "play none none none"
+                    }
+                }
+            );
+        });
+
+        // --- Smooth Scrolling for In-Page Navigation ---
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                // Prevent default behavior only if it's an in-page link
+                if (this.getAttribute('href').startsWith('#')) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        const offsetTop = targetElement.offsetTop;
+                        window.scrollTo({
+                            top: offsetTop - 100, // Adjusted for fixed header
+                            behavior: 'smooth'
+                        });
+                    }
+                }
+            });
+        });
+
+        // --- Live Product Search Functionality ---
+        const searchInput = document.getElementById('product-search');
+        const productCards = document.querySelectorAll('.product-card');
+        const noResultsMessage = document.getElementById('no-results');
+
+        searchInput.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            let visibleProducts = 0;
+
+            productCards.forEach(card => {
+                const title = card.querySelector('h3').textContent.toLowerCase();
+                const description = card.querySelector('p').textContent.toLowerCase();
+                
+                if (title.includes(searchTerm) || description.includes(searchTerm)) {
+                    card.style.display = 'flex';
+                    visibleProducts++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            if (visibleProducts === 0) {
+                noResultsMessage.style.display = 'block';
+            } else {
+                noResultsMessage.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

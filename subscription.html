@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aetherius - Subscription Payment</title>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-dark: #0a0a0f;
+            --bg-card: #151520;
+            --accent-primary: #6366f1;
+            --accent-cyan: #00d4ff;
+            --accent-glow: #818cf8;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0b0;
+            --border-subtle: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: radial-gradient(ellipse at top, #2c3e50, #000000);
+            background-attachment: fixed;
+            color: var(--text-primary);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .header {
+            position: absolute;
+            top: 2rem;
+            left: 2rem;
+            z-index: 10;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
+        }
+
+        main {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            padding: 6rem 2rem 2rem;
+        }
+        
+        .payment-container {
+            width: 100%;
+            max-width: 600px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 20px;
+            padding: 2.5rem;
+        }
+
+        .payment-container h1 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 2.5rem;
+            color: var(--text-primary);
+        }
+
+        .accordion-item {
+            border-bottom: 1px solid var(--border-subtle);
+        }
+        .accordion-item:last-child {
+            border-bottom: none;
+        }
+
+        .accordion-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 0;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .accordion-header:hover {
+            background-color: rgba(255, 255, 255, 0.03);
+        }
+
+        .accordion-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .payment-logos {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .payment-logos svg {
+            height: 24px;
+            width: auto;
+            fill: var(--text-secondary);
+        }
+        
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-in-out, padding 0.5s ease-in-out;
+            padding: 0 1rem;
+        }
+        
+        .accordion-item.active .accordion-content {
+            max-height: 500px; /* Adjust as needed */
+            padding: 0.5rem 1rem 2rem;
+        }
+        
+        .input-group {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 1rem;
+            background: var(--bg-dark);
+            border: 1px solid var(--border-subtle);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.3);
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 1rem;
+        }
+        .form-row .input-group {
+            flex: 1;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1rem;
+            margin-top: 1rem;
+            background: var(--accent-primary);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 10px 20px rgba(99, 102, 241, 0.2);
+        }
+
+        .submit-btn:hover {
+            background: var(--accent-glow);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(99, 102, 241, 0.4);
+        }
+        
+        .bank-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1rem;
+        }
+
+        .bank-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.5rem;
+            background: var(--bg-dark);
+            border: 1px solid var(--border-subtle);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            height: 70px;
+        }
+
+        .bank-btn:hover {
+            border-color: var(--accent-primary);
+            transform: translateY(-2px);
+        }
+        
+        .bank-btn img {
+            height: 100%;
+            width: 100%;
+            object-fit: contain;
+        }
+
+        /* ========== FOOTER ========== */
+        footer {
+            width: 100%;
+            padding: 4rem 2rem 2rem;
+            border-top: 1px solid var(--border-subtle);
+            text-align: center;
+            background: var(--bg-dark);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+            text-align: left;
+        }
+
+        .footer-section h4 {
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin: 0.75rem 0;
+        }
+
+        .footer-section a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: var(--text-primary);
+        }
+
+        .footer-bottom {
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-subtle);
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <a href="./profile.html" class="logo">AETHERIUS</a>
+    </header>
+
+    <main>
+        <div class="payment-container">
+            <h1>Choose Your Payment Method</h1>
+
+            <div class="accordion">
+                <!-- Credit/Debit Card -->
+                <div class="accordion-item active">
+                    <div class="accordion-header">
+                        <span class="accordion-title">Credit/Debit Card</span>
+                        <div class="payment-logos">
+                             <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Visa</title><path d="M11.512 12.164c.26-.118.46-.296.601-.535l.487-1.04-.98.225c-.21.059-.42.06-.63.03l-.317-.046v1.366zm6.012-3.132c-.318-.088-.787-.206-1.317-.315-.22-.059-2.043-.48-2.043-.48s-.18.499-.21.565c-.21.432-.877.89-1.217 1.059l-1.318.655-.26.634.02 0c.66.166 1.488.312 2.375.44.887.13 1.62.23 2.217.29l.167.033c.42.045.81-.045 1.15-.27.38-.254.59-.654.64-1.123.03-.314-.02-.614-.15-.893a.968.968 0 00-.775-.555zm-8.398 4.347c.21-.015.42-.03.63-.044l.437-.045.24-.555-.03-.01-4.24-1.007-.06.27c-.22 1.012.3 1.956 1.2 2.4.15.074.3.134.45.18l.21.06v.015l.044-.015.11-.03-.015-.015c.06-.014.12-.03.18-.044l.32-.09.3-.104.09-.03.137-.06c.09-.044.18-.09.27-.15l.074-.06c.09-.073.18-.15.255-.24l.06-.074.12-.18.046-.075.09-.164.014-.03zm5.02-1.952c-2.435-.605-4.81-1.2-5.912-1.474l-.94 2.222c-.134.314-.12.654.03.968.15.314.42.565.75.696.887.33 1.983.18 2.657-.03l.39-.12.24-.074.27-.09.284-.104c.81-.298 1.153-.784 1.233-1.25l.407-1.936zM18.47 6.47c.36.8-1.2 2.3-3.6 2.8-1.05.21-2.2.06-2.9-.09l.66-2.97c.33-.69.96-1.08 1.62-1.14.93-.09 1.92.36 2.52.93.81.749 1.349 1.474 1.7 2.47z"/></svg>
+                             <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Mastercard</title><path d="M12 1.608c-5.74 0-10.392 4.652-10.392 10.392S6.26 22.392 12 22.392 22.392 17.74 22.392 12 17.74 1.608 12 1.608zM9.06 8.016c-1.385 1.57-2.14 3.79-2.02 6.012.122 2.22 1.15 4.29 2.8 5.61a7.95 7.95 0 005.152-8.358 7.95 7.95 0 00-5.932-3.264zm5.88 2.316a7.95 7.95 0 00-5.15 8.356c1.386-1.57 2.14-3.788 2.02-6.01-.12-2.22-1.15-4.29-2.8-5.612a7.95 7.95 0 005.93 3.265z"/></svg>
+                             <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Stripe</title><path d="M19.9001 2.3H4.1001c-1.1 0-2 .9-2 2v4.8c0 1.1.9 2 2 2h15.8c1.1 0 2-.9 2-2V4.3c0-1.1-.9-2-2-2zm-15.8 7c-.2 0-.4-.1-.5-.2s-.2-.3-.2-.5V4.3c0-.2.1-.4.2-.5s.3-.2.5-.2h15.8c.2 0 .4.1.5.2s.2.3.2.5v4.8c0 .2-.1.4-.2.5s-.3.2-.5.2H4.1001zm0 3.8h15.8c1.1 0 2 .9 2 2v4.8c0 1.1-.9 2-2 2H4.1001c-1.1 0-2-.9-2-2v-4.8c0-1.1.9-2 2-2zm15.8 7c.2 0 .4-.1.5-.2s.2-.3.2-.5v-4.8c0-.2-.1-.4-.2-.5s-.3-.2-.5-.2H4.1001c-.2 0-.4.1-.5.2s-.2.3-.2.5v4.8c0 .2.1.4.2.5s.3.2.5.2h15.8zM8.3001 5.9h2.9c.7 0 1.3-.6 1.3-1.3s-.6-1.3-1.3-1.3h-2.9c-.7 0-1.3.6-1.3 1.3s.6 1.3 1.3 1.3zm0 7.6h7.3c.7 0 1.3-.6 1.3-1.3s-.6-1.3-1.3-1.3h-7.3c-.7 0-1.3.6-1.3 1.3s.6 1.3 1.3 1.3z"/></svg>
+                        </div>
+                    </div>
+                    <div class="accordion-content">
+                        <form>
+                            <div class="input-group">
+                                <input type="text" id="card-number" class="input-field" placeholder="Card Number" required>
+                            </div>
+                            <div class="input-group">
+                                <input type="text" id="card-holder" class="input-field" placeholder="Card Holder Name" required>
+                            </div>
+                            <div class="form-row">
+                                <div class="input-group">
+                                    <input type="text" id="expiry-date" class="input-field" placeholder="Expiry (MM/YY)" required>
+                                </div>
+                                <div class="input-group">
+                                    <input type="text" id="cvv" class="input-field" placeholder="CVV" required>
+                                </div>
+                            </div>
+                            <button type="submit" class="submit-btn">Pay Securely</button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Net Banking -->
+                <div class="accordion-item">
+                     <div class="accordion-header">
+                        <span class="accordion-title">Net Banking</span>
+                    </div>
+                    <div class="accordion-content">
+                       <div class="bank-options">
+                           <button class="bank-btn">
+                               <img src="https://static.theprint.in/wp-content/uploads/2021/06/axis-bank-makes-banking-conversational-enables-secured-communication-over-whatsapp.jpg?compress=true&quality=80&w=376&dpr=2.6" alt="Axis Bank">
+                           </button>
+                           <button class="bank-btn">
+                                <img src="https://wordzz.com/wp-content/uploads/2016/10/sbi.jpg" alt="SBI Bank">
+                           </button>
+                           <button class="bank-btn">
+                                <img src="https://static.vecteezy.com/system/resources/previews/020/336/703/non_2x/hdfc-logo-hdfc-icon-free-free-vector.jpg" alt="HDFC Bank">
+                           </button>
+                           <button class="bank-btn">
+                               <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRp8mXBusladp4eop5YLbiGOpipboZcpsGylw&s" alt="ICICI Bank">
+                           </button>
+                       </div>
+                    </div>
+                </div>
+
+                <!-- UPI -->
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span class="accordion-title">UPI</span>
+                         <div class="payment-logos">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#fff" viewBox="0 0 24 24"><path d="M10.152 10.138h3.696v3.722h-3.696v-3.722z"/><path d="M19.043 5.483c-1.84-1.83-4.303-2.85-6.936-2.85s-5.096 1.02-6.936 2.85c-1.83 1.84-2.85 4.303-2.85 6.936s1.02 5.096 2.85 6.936c1.84 1.83 4.303 2.85 6.936 2.85s5.096-1.02 6.936-2.85c1.83-1.84 2.85-4.303 2.85-6.936s-1.02-5.096-2.85-6.936zm-6.936 15.01a8.066 8.066 0 0 0 8.076-8.074A8.066 8.066 0 0 0 12.107 4.34a8.066 8.066 0 0 0-8.075 8.075 8.066 8.066 0 0 0 8.076 8.074z"/><path d="M15.342 12.003c0-.98-.36-1.822-1.022-2.522-.67-.708-1.522-1.07-2.502-1.07h-3.84v9.18h1.494v-3.722h2.346c.98 0 1.822-.361 2.502-1.07.662-.7.022-1.542.022-2.522z"/></svg>
+                            <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>PhonePe</title><path d="m13.012 1.357 5.76 1.884c.489.16.852.585.932 1.093l.24 1.503c.16.977-.49 1.884-1.42 2.043l-3.23.56-4.508-4.508L13.012 1.357zm-2.044 2.043L6.46 7.908l3.66 3.66 4.508-4.508-2.044-2.044h-2.57zM8.53 10.151l-4.508 4.508.852.852 4.508-4.508-0.852-.852zM4.022 14.66l.852.852 3.66 3.66-2.57 2.57-2.043-2.043.101-5.04zM10.15 15.37l-3.66-3.66-1.576 1.576 3.66 3.66 1.576-1.576zm.852 4.422 4.508-4.508.852.852-4.508 4.508-.852-.852zm4.508-3.66 1.576-1.576 3.66 3.66-1.576 1.576-3.66-3.66z"/></svg>
+                             <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>PayPal</title><path d="M7.064 21.332H2.49c-.22 0-.415-.15-.47-.363l-2-7.468c-.054-.21.07-.42.284-.47.114-.027.228-.004.326.06L5.34 16.27c.21.14.495.02.58-.23L8.14 9.11c.14-.37.51-.58.89-.48l3.14.8c.21.05.38.21.45.42l2.02 6.03.38-1.14c.14-.42.54-.66.97-.57l3.15.7c.18.04.34.16.44.31.1.16.12.35.06.52l-2.06 6.13c-.05.16-.2.27-.37.27H7.064zM22.13 4.264c-.11-.15-.28-.24-.46-.24H16.4c-2.32 0-4.21 1.83-4.3 4.14-.08 2.18 1.58 4.02 3.73 4.2l-1.1 3.27c-.08.22.04.46.26.54.06.02.12.03.18.03.16 0 .31-.08.4-.23L16.5 13.4c2.1-.33 3.6-2.16 3.7-4.32.1-2.26-1.5-4.14-3.6-4.34.18-1.84 1.73-3.2 3.6-3.2h.56c.22 0 .41.15.47.36l1.32 4.93c.05.21-.07.42-.28.47-.21.05-.42-.07-.47-.28l-1.2-4.48z"/></svg>
+                        </div>
+                    </div>
+                    <div class="accordion-content">
+                        <form>
+                             <div class="input-group">
+                                <input type="text" id="upi-id" class="input-field" placeholder="Enter UPI ID" required>
+                            </div>
+                            <button type="submit" class="submit-btn">Pay with UPI</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Shop</h4>
+                <ul>
+                    <li><a href="#">New Arrivals</a></li>
+                    <li><a href="#">Deals</a></li>
+                    <li><a href="#">Electronics</a></li>
+                    <li><a href="#">Fashion</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Press</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Track Order</a></li>
+                    <li><a href="#">Returns</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Legal</h4>
+                <ul>
+                    <li><a href="#">Privacy</a></li>
+                    <li><a href="#">Terms</a></li>
+                    <li><a href="#">Cookie Policy</a></li>
+                    <li><a href="#">Licenses</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Aetherius. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        const accordionItems = document.querySelectorAll('.accordion-item');
+
+        accordionItems.forEach(item => {
+            const header = item.querySelector('.accordion-header');
+            header.addEventListener('click', () => {
+                const currentlyActive = document.querySelector('.accordion-item.active');
+                if (currentlyActive && currentlyActive !== item) {
+                    currentlyActive.classList.remove('active');
+                }
+                item.classList.toggle('active');
+            });
+        });
+
+        // GSAP Animations
+        gsap.from('.payment-container', { 
+            opacity: 0,
+            y: -50,
+            duration: 0.8, 
+            delay: 0.3,
+            ease: 'power2.out' 
+        });
+        gsap.from('footer', { 
+            opacity: 0,
+            y: 50,
+            duration: 1, 
+            delay: 0.5,
+            ease: 'power2.out' 
+        });
+    </script>
+</body>
+</html>
+
