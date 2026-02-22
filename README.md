@@ -1,31 +1,40 @@
 # Aetherius
 
-A shopping website with Unique Animations and a beautiful homepage for User interaction.
+**Sep 2025**
 
-Features added-
+A modern shopping website featuring unique animations and a visually engaging homepage designed to enhance user interaction and browsing experience.
 
-i)Analytics with proper graphs and statistics
+---
 
-ii)Fashion/Electronic/Household products, along with a cart function
+## 🚀 Features
 
-iii)Customer Reviews
+1. **Analytics Dashboard** with proper graphs and statistics  
+2. **Product Categories** including Fashion, Electronics, and Household items with cart functionality  
+3. **Customer Reviews Section** for enhanced credibility and engagement  
+4. **Billing Interface** with working Monthly and Annual subscription options  
+5. **About Us Section** introducing team members  
+6. **Interactive Homepage Punchline** — hovering over categories (Electronics / Fashion / Home Goods) reveals brief details  
 
-iv)A billing interface with working Monthly and Annual Subscription
+---
 
-v)An about-us section describing our team members
+## 🛠 Tech Stack
 
-vi)An interactive PunchLine.Hovering over the Home Page punchline (Electronics/Fashion/Home Goods) will give you brief details 
+- HTML  
+- CSS  
+- JavaScript  
 
+---
 
+## 🌐 Deployment
 
-Tech Used-
+Deployed on **Netlify**
 
-i)Html
+---
 
-ii)CSS
+## 💡 Skills Demonstrated
 
-iii)JavaScript
-
-
-Deployed on Netlifly
-
+- Front-End Development  
+- HTML  
+- Cascading Style Sheets (CSS)  
+- JavaScript  
+- UI Animation & Interactive Design
